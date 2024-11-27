@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="container">
+		<a class="navbar-brand" href="#">OVS</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="menu">
+			<div class="navbar-nav">
+				<a class="nav-link" href="{{ url_for('views.home') }}">Home</a>
+				<a class="nav-link" href="{{ url_for('views.vote') }}">Vote</a>
+				<a class="nav-link" href="{{ url_for('views.create_poll') }}">Create Poll</a>
+				<a class="nav-link" href="{{ url_for('views.results') }}">Results</a>
+				<a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+				<a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+				<a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+			</div>
+		</div>
+	</div>
+</nav>

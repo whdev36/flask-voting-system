@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="https://github.com/whdev36">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+	<title>OVS | {% block title %}{% endblock %}</title>
+</head>
+<body>
+	<!-- Navbar -->
+	{% include 'navbar.html' %}
+	<!-- Container -->
+	<div class="container">
+		{% block content %}{% endblock %}
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+</body>
+</html>

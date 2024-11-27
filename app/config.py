@@ -1,0 +1,7 @@
+
+class Config:
+	DEBUG = True
+	DATABASE_NAME = 'vote.db'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///' + DATABASE_NAME
+	SQLALCHEMY_TRACK_MODIFIACATIONS = False
+	SECRET_KEY = ''

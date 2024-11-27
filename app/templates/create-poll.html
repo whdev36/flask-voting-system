@@ -2,4 +2,19 @@
 {% block title %}Create Poll{% endblock %}
 {% block content %}
 	<h1>Create Poll</h1>
+	<form method="post">
+		{{ form.hidden_tag() }}
+		<div class="mb-3">
+			{{ form.question.label }}
+			{{ form.question(class='form-control', placeholder='Type a new question') }}
+		</div>
+		<h4>Options:</h4>
+		{% for option in form.options %}
+			<div class="mb-3">
+				{{ option.text.label }}
+				{{ option.text(class='form-control', placeholder='Enter option text') }}
+			</div>
+		{% endfor %}
+		{{ form.submit(class='btn btn-primary w-100') }}
+	</form>
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FieldList, FormField
 from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationError
 from .models import User
 
@@ -21,12 +21,17 @@ class LoginForm(FlaskForm):
 	password = PasswordField('Password', validators=[DataRequired()])
 	submit = SubmitField('Login')
 
+class OptionForm(FlaskForm):
+	text = StringField('Option Text', validators=[DataRequired()])
+	# submit = SubmitField('Save')
+
 class CreatePollForm(FlaskForm):
 	question = TextAreaField('Poll Question', validators=[DataRequired(), Length(max=255)])
-	option_1 = StringField('Option 1', validators=[DataRequired(), Length(max=255)])
-	option_2 = StringField('Option 2', validators=[DataRequired(), Length(max=255)])
-	option_3 = StringField('Option 3 (Optional)', validators=[Length(max=255)])
-	option_4 = StringField('Option 4 (Optional)', validators=[Length(max=255)])
+	# option_1 = StringField('Option 1', validators=[DataRequired(), Length(max=255)])
+	# option_2 = StringField('Option 2', validators=[DataRequired(), Length(max=255)])
+	# option_3 = StringField('Option 3 (Optional)', validators=[Length(max=255)])
+	# option_4 = StringField('Option 4 (Optional)', validators=[Length(max=255)])
+	options = FieldList(FormField(OptionForm), min_entries=2, mx_entries=10)
 	submit = SubmitField('Create Poll')
 
 # Voting Form

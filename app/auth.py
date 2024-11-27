@@ -21,8 +21,8 @@ def register():
 		db.session.add(user)
 		db.session.commit() # SAVE
 		flash('Your account has been created! You can now log in.', 'success')
-		return redirect(url_for('login'))
-	return render_template('register.html')
+		return redirect(url_for('auth.login'))
+	return render_template('register.html', form=form)
 
 @auth.route('/logout')
 def logout():

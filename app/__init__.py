@@ -10,7 +10,7 @@ import os
 # Configure objects
 db = SQLAlchemy()
 migrate = Migrate()
-# login_manager = LoginManager()
+login_manager = LoginManager()
 
 def create_app():
 	app = Flask(__name__)
@@ -21,12 +21,18 @@ def create_app():
 	# Add Flask extensions
 	db.init_app(app)
 	migrate.init_app(app)
-	# login_manager.init_app(app)
+	login_manager.init_app(app)
 	CORS(app)
 
-	# # Login manager settings
-	# login_manager.login_view = 'auth.login'
-	# login_manager.login_message = 'Please log in to access this page.'
+	# Login manager settings
+	from .models import User
+
+	@login_manager.user_loader
+	def load_user(id):
+		return User.query.get(int(id))
+
+	login_manager.login_view = 'auth.login'
+	login_manager.login_message = 'Please log in to access this page.'
 
 	# Register blueprint
 	from .views import views
@@ -35,6 +41,7 @@ def create_app():
 	app.register_blueprint(views)
 	app.register_blueprint(auth)
 
+	# Check directory and create database
 	db_name = config.Config.DATABASE_NAME
 	if not os.path.exists(db_name):
 		with app.app_context():

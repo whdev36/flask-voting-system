@@ -1,0 +1,1 @@
+<a href="https://www.flaticon.com/free-icons/election" title="election icons">Election icons created by Freepik - Flaticon</a>

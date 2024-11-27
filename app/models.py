@@ -2,10 +2,10 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 from . import db
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
-	email = db.Column(db.String(120), nullable=False)
-	first_name = db.Column(db.String(30), nullable=False, unique=True)
+	email = db.Column(db.String(120), nullable=False, unique=True)
+	first_name = db.Column(db.String(30), nullable=False)
 	last_name = db.Column(db.String(30), nullable=False)
 	password = db.Column(db.String(100), nullable=False)
 	votes = db.relationship('Vote', backref='user', lazy=True)
@@ -16,7 +16,7 @@ class User(db.Model):
 class Poll(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	question = db.Column(db.String(255), nullable=False)
-	created_at = db.Column(db.DateTime, default=func.now())
+	created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 	options = db.relationship('Option', backref='poll', lazy=True)
 	votes = db.relationship('Vote', backref='poll', lazy=True)
 
@@ -25,7 +25,7 @@ class Poll(db.Model):
 		return '<Poll %r>' % self.question
 
 class Option(db.Model):
-	id = db.Column(db.Integer)
+	id = db.Column(db.Integer, primary_key=True)
 	text = db.Column(db.String(255), nullable=False)
 	poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'), nullable=False)
 	votes = db.relationship('Vote', backref='option', lazy=True)
@@ -38,7 +38,7 @@ class Vote(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	poll_id = db.Column(db.Integer, db.ForeignKey('poll.id'), nullable=False)
 	option_id = db.Column(db.Integer, db.ForeignKey('option.id'), nullable=False)
-	created_at = db.Column(db.DateTime, default=func.now())
+	created_at = db.Column(db.DateTime(timezone=True), default=func.now())
 
 	def __repr__(self):
 		return '<Vote %r>' % self.user_id

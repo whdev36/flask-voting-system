@@ -1,14 +1,25 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
-from .forms import RegisterForm
+from flask import Blueprint, render_template, flash, redirect, url_for, request
+from .forms import RegisterForm, LoginForm
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash,  check_password_hash
+from flask_login import login_user
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login')
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
-	return render_template('login.html')
+	form = LoginForm()
+	if form.validate_on_submit():
+		user = User.query.filter_by(email=form.email.data).first()
+		if user and check_password_hash(user.password, form.password.data):
+			login_user(user)
+			flash('Logged in successfully!', 'success')
+			next_page = request.args.get('next')
+			return redirect(next) if next_page else redirect(url_for('views.home'))
+		else:
+			flash('Invalid email or password. Please try again!', 'danger')
+	return render_template('login.html', form=form)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():

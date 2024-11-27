@@ -3,7 +3,7 @@ from .forms import RegisterForm, LoginForm
 from .models import User
 from . import db
 from werkzeug.security import generate_password_hash,  check_password_hash
-from flask_login import login_user
+from flask_login import login_user, login_required
 
 auth = Blueprint('auth', __name__)
 
@@ -36,5 +36,7 @@ def register():
 	return render_template('register.html', form=form)
 
 @auth.route('/logout')
+@login_required
 def logout():
-	return 'Logout'
+	flash('You have been logged out successfully!', 'success')
+	return redirect(url_for('auth.login'))

@@ -11,21 +11,27 @@ def home():
 
 @views.route('/results')
 def results():
-	return render_template('results.html')
+	polls = Poll.query.all()
+	return render_template('results.html', polls=polls)
 
 @views.route('/create-poll', methods=['GET', 'POST'])
 def create_poll():
 	form = PollForm()
 	if form.validate_on_submit():
-		poll = Poll(question=form.question.data)
-		db.session.add(poll)
-		db.session.commit()
-		for option_form in form.options:
-			option = Option(text=option_form.text.data, poll_id=poll.id)
-			db.session.add(option)
-		db.session.commit()
-		flash('Poll successfully created!', 'success')
-		return redirect(url_for('home'))
+		try:
+			poll = Poll(question=form.question.data)
+			db.session.add(poll)
+			db.session.commit()
+			for  option_form in form.options:
+				if option_form.text.date.strip():
+					option = Option(text=option_form.text.data, poll_id=poll.id)
+					db.session.add(option)
+			db.session.commit()
+			flash('Poll successfully created!', 'success')
+			return redirect(url_for('home'))
+		except Exception as e:
+			db.session.rollback()
+			flash(f'Error: {str(e)}', 'danger')
 	return render_template('create-poll.html', form=form)
 
 @views.route('/vote')

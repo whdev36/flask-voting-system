@@ -6,13 +6,4 @@
 	{% else %}
 		<h1>Welcome!</h1>
 	{% endif %}
-	<!-- TODO: Search polls -->
-	<!-- All polls -->
-	{% if polls %}
-		<ul>
-			{% for poll in polls %}
-				<li><a href="#">{{ poll.question }}</a></li>
-			{% endfor %}
-		</ul>
-	{% endif %}
 {% endblock %}

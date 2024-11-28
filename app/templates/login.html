@@ -3,18 +3,18 @@
 {% block content %}
 	<div class="row">
 		<div class="col-md-4 offset-md-4 bg-dark px-3 py-5 text-light rounded">
-			<form class="d-grid" method="post">
+			<form method="post">
 				<h2 class="mb-5">Login</h2>
 				{{ form.hidden_tag() }}
 				<div class="mb-2">
 					{{ form.email.label }}
 					{{ form.email(class='form-control', placeholder='Enter your email') }}
 				</div>
-				<div class="mb-2">
+				<div class="mb-5">
 					{{ form.password.label }}
 					{{ form.password(class='form-control', placeholder='Enter your password') }}
 				</div>
-				{{ form.submit(class='btn btn-primary') }}
+				{{ form.submit(class='btn btn-primary w-100') }}
 			</form>
 		</div>
 	</div>

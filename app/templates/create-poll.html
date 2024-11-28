@@ -2,47 +2,4 @@
 {% block title %}Create Poll{% endblock %}
 {% block content %}
 	<h1>Create Poll</h1>
-	<form method="post">
-		{{ form.hidden_tag() }}
-		<div>
-			{{ form.question.label }}
-			{{ form.question(class='form-control', placeholder='Enter your question') }}
-			{% for error in form.question.errors %}
-				<small class="text-danger">{{ error }}</small>
-			{% endfor %}
-		</div>
-		<!-- Option 1 -->
-		<div>
-			{{ form.option_1.label }}
-			{{ form.option_1(class='form-control', placeholder='Option 1') }}
-			{% for error in form.option_1.errors %}
-				<small class="text-danger">{{ error }}</small>
-			{% endfor %}
-		</div>
-		<!-- Option 2 -->
-		<div>
-			{{ form.option_2.label }}
-			{{ form.option_2(class='form-control', placeholder='Option 2') }}
-			{% for error in form.option_2.errors %}
-				<small class="text-danger">{{ error }}</small>
-			{% endfor %}
-		</div>
-		<!-- Option 3 -->
-		<div>
-			{{ form.option_3.label }}
-			{{ form.option_3(class='form-control', placeholder='Option 3') }}
-			{% for error in form.option_3.errors %}
-				<small class="text-danger">{{ error }}</small>
-			{% endfor %}
-		</div>
-		<!-- Option 4 -->
-		<div>
-			{{ form.option_4.label }}
-			{{ form.option_4(class='form-control', placeholder='Option 4') }}
-			{% for error in form.option_4.errors %}
-				<small class="text-danger">{{ error }}</small>
-			{% endfor %}
-		</div>
-		{{ form.submit(class='btn btn-primary w-100') }}
-	</form>
 {% endblock %}

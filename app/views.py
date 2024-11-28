@@ -42,3 +42,8 @@ def create_poll():
 @views.route('/vote')
 def vote():
 	return render_template('vote.html')
+
+@views.route('/poll/<id>')
+def poll(id):
+	# return f'Poll {id}'
+	return render_template('poll.html', id=id)

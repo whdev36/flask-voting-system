@@ -22,11 +22,16 @@ class LoginForm(FlaskForm):
 	submit = SubmitField('Login')
 
 class OptionForm(FlaskForm):
-	text = StringField('Option', validators=[DataRequired()])
+	text = StringField('Option Text', validators=[DataRequired()])
+	# submit = SubmitField('Save')
 
 class PollForm(FlaskForm):
 	question = TextAreaField('Poll Question', validators=[DataRequired(), Length(max=255)])
-	options = FieldList(FormField(OptionForm), min_entries=2, max_entries=10)
+	option_1 = StringField('Option 1', validators=[DataRequired(), Length(max=255)])
+	option_2 = StringField('Option 2', validators=[DataRequired(), Length(max=255)])
+	option_3 = StringField('Option 3 (Optional)', validators=[Length(max=255)])
+	option_4 = StringField('Option 4 (Optional)', validators=[Length(max=255)])
+	# options = FieldList(FormField(OptionForm), min_entries=2, max_entries=10)
 	submit = SubmitField('Create')
 
 # Voting Form

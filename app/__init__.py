@@ -1,13 +1,13 @@
 from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user
-from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_restful import Api
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from . import config
-import os
+from flask_sqlalchemy import SQLAlchemy # SQLite3 database
+from flask_login import LoginManager, current_user # User authentication
+from flask_migrate import Migrate # Database migrations
+from flask_cors import CORS # API CORS
+from flask_restful import Api # API
+from flask_admin import Admin # Admin
+from flask_admin.contrib.sqla import ModelView # Admin model view
+from . import config # All configurations
+import os # Operting system
 
 # Configure objects
 db = SQLAlchemy()

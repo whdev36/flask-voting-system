@@ -8,12 +8,12 @@ views = Blueprint('views', __name__)
 
 @views.route('/')
 def home():
-	return render_template('home.html')
+	polls = Poll.query.all()
+	return render_template('home.html', polls=polls)
 
 @views.route('/results')
 def results():
-	polls = Poll.query.all()
-	return render_template('results.html', polls=polls)
+	return render_template('results.html')
 
 @views.route('/create-poll', methods=['GET', 'POST'])
 def create_poll():

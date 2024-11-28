@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import login_required, current_user
 from .forms import PollForm
 from .models import Option, Poll
+from . import db
 
 views = Blueprint('views', __name__)
 
@@ -22,13 +23,17 @@ def create_poll():
 			poll = Poll(question=form.question.data)
 			db.session.add(poll)
 			db.session.commit()
-			for  option_form in form.options:
-				if option_form.text.date.strip():
-					option = Option(text=option_form.text.data, poll_id=poll.id)
-					db.session.add(option)
+			if form.option_1.data.strip():
+				db.session.add(Option(text=form.option_1.data, poll_id=poll.id))
+			if form.option_2.data.strip():
+				db.session.add(Option(text=form.option_2.data, poll_id=poll.id))
+			if form.option_3.data.strip():
+				db.session.add(Option(text=form.option_4.data, poll_id=poll.id))
+			if form.option_4.data.strip():
+				db.session.add(Option(text=form.option_4.data, poll_id=poll.id))
 			db.session.commit()
 			flash('Poll successfully created!', 'success')
-			return redirect(url_for('home'))
+			return redirect(url_for('views.home'))
 		except Exception as e:
 			db.session.rollback()
 			flash(f'Error: {str(e)}', 'danger')

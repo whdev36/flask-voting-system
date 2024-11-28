@@ -11,13 +11,36 @@
 				<small class="text-danger">{{ error }}</small>
 			{% endfor %}
 		</div>
+		<!-- Option 1 -->
 		<div>
-			{% for option in form.options %}
-				{{ option.text.label }}
-				{{ option.text(class='form-control', placeholder='Option') }}
-				{% for error in option.text.errors %}
-					<small class="text-danger">{{ error }}</small>
-				{% endfor %}
+			{{ form.option_1.label }}
+			{{ form.option_1(class='form-control', placeholder='Option 1') }}
+			{% for error in form.option_1.errors %}
+				<small class="text-danger">{{ error }}</small>
+			{% endfor %}
+		</div>
+		<!-- Option 2 -->
+		<div>
+			{{ form.option_2.label }}
+			{{ form.option_2(class='form-control', placeholder='Option 2') }}
+			{% for error in form.option_2.errors %}
+				<small class="text-danger">{{ error }}</small>
+			{% endfor %}
+		</div>
+		<!-- Option 3 -->
+		<div>
+			{{ form.option_3.label }}
+			{{ form.option_3(class='form-control', placeholder='Option 3') }}
+			{% for error in form.option_3.errors %}
+				<small class="text-danger">{{ error }}</small>
+			{% endfor %}
+		</div>
+		<!-- Option 4 -->
+		<div>
+			{{ form.option_4.label }}
+			{{ form.option_4(class='form-control', placeholder='Option 4') }}
+			{% for error in form.option_4.errors %}
+				<small class="text-danger">{{ error }}</small>
 			{% endfor %}
 		</div>
 		{{ form.submit(class='btn btn-primary w-100') }}

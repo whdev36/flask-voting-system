@@ -20,3 +20,11 @@ class LoginForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Email()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	submit = SubmitField('Login')
+
+class OptionForm(FlaskForm):
+	text = StringField('Option Text', validators=[DataRequired(), Length(max=255)])
+
+class PollForm(FlaskForm):
+	question = StringField('Question', validators=[DataRequired(), Length(max=255)])
+	options = FieldList(FormField(OptionForm), min_entries=2, max_entries=10)
+	submit = SubmitField('Create')

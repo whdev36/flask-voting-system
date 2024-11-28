@@ -8,7 +8,6 @@ class User(db.Model, UserMixin):
 	first_name = db.Column(db.String(30), nullable=False)
 	last_name = db.Column(db.String(30), nullable=False)
 	password = db.Column(db.String(255), nullable=False)
-	votes = db.relationship('Vote', backref='user', lazy=True)
 
 	def __repr__(self):
 		return '<User %r>' % self.email

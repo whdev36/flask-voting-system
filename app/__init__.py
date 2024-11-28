@@ -1,9 +1,11 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
+from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 from . import config
 import os
 
@@ -11,6 +13,14 @@ import os
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+
+# Create admin model view
+class AdminModelView(ModelView):
+	def is_accessible(self):
+		return current_user.is_authenticated and current_user.email in config.Config.ADMIN_ALLOWED_EMAILS
+
+	def inaccessible_callback(self, name, **kwargs):
+		return redirect(url_for('auth.login'))
 
 def create_app():
 	app = Flask(__name__)
@@ -25,7 +35,9 @@ def create_app():
 	CORS(app)
 
 	# Login manager settings
-	from .models import User
+	from .models import User, Poll, Option
+	from .views import views
+	from .auth import auth
 
 	@login_manager.user_loader
 	def load_user(id):
@@ -34,10 +46,15 @@ def create_app():
 	login_manager.login_view = 'auth.login'
 	login_manager.login_message = 'Please log in to access this page.'
 
-	# Register blueprint
-	from .views import views
-	from .auth import auth
+	# Create admin page
+	admin = Admin(app, name=config.Config.ADMIN_NAME,
+		template_mode=config.Config.ADMIN_TEMPLATE_MODE)
+	with app.app_context():
+		admin.add_view(AdminModelView(User, db.session))
+		admin.add_view(AdminModelView(Poll, db.session))
+		admin.add_view(AdminModelView(Option, db.session))
 
+	# Register blueprint
 	app.register_blueprint(views)
 	app.register_blueprint(auth)
 

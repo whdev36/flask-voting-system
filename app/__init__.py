@@ -5,6 +5,8 @@ from flask_migrate import Migrate # Database migrations
 from flask_cors import CORS # API CORS
 from flask_restful import Api # API
 from flask_admin import Admin # Admin
+from flask_wtf.csrf import CSRFProtect # CSRF token protection
+from flask_login import AnonymousUserMixin
 from flask_admin.contrib.sqla import ModelView # Admin model view
 from . import config # All configurations
 import os # Operting system
@@ -13,6 +15,7 @@ import os # Operting system
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+csrf = CSRFProtect()
 
 # Create admin model view
 class AdminModelView(ModelView):
@@ -21,6 +24,9 @@ class AdminModelView(ModelView):
 
 	def inaccessible_callback(self, name, **kwargs):
 		return redirect(url_for('auth.login'))
+
+class Anonymous(AnonymousUserMixin):
+	id = None # Set none value to user id
 
 def create_app():
 	app = Flask(__name__)
@@ -32,6 +38,7 @@ def create_app():
 	db.init_app(app)
 	migrate.init_app(app)
 	login_manager.init_app(app)
+	csrf.init_app(app)
 	CORS(app)
 
 	# Login manager settings
@@ -43,8 +50,9 @@ def create_app():
 	def load_user(id):
 		return User.query.get(int(id))
 
-	login_manager.login_view = 'auth.login'
-	login_manager.login_message = 'Please log in to access this page.'
+	login_manager.login_view = 'auth.login' # Set default login page
+	login_manager.login_message = 'Please log in to access this page.' # Create default login message
+	login_manager.ananymous_user = Anonymous # Set ananymous class
 
 	# Create admin page
 	admin = Admin(app, name=config.Config.ADMIN_NAME,

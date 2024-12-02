@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Create Poll{% endblock %}
 {% block content %}
-	<h1>Create Poll</h1>
+	<h1>Create a New Poll</h1>
+	<form method="post" action="{{ url_for('views.create_poll') }}">
+	    {{ form.hidden_tag() }}
+	    
+	    <div>
+	        {{ form.question.label }}
+	        {{ form.question(class="form-control") }}
+	    </div>
+
+	    <h4>Options</h4>
+	    {% for option_form in form.options %}
+	        <div>
+	            {{ option_form.text.label }}
+	            {{ option_form.text(class="form-control") }}
+	        </div>
+	    {% endfor %}
+
+	    <div>
+	        {{ form.submit(class="btn btn-primary") }}
+	    </div>
+	</form>
 {% endblock %}

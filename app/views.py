@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from .forms import PollForm, OptionForm
 from .models import Poll, Option
@@ -41,7 +41,16 @@ def create_poll():
 def vote():
 	return render_template('vote.html')
 
-@views.route('/poll/<id>')
+@views.route('/poll/<id>', methods=['GET', 'POST'])
 def poll(id):
-	# return f'Poll {id}'
-	return render_template('poll.html', id=id)
+	# Find poll with ID
+	poll = Poll.query.get_or_404(id)
+	options = Option.query.filter_by(poll_id=poll.id).all()
+	if request.method == 'POST':
+		selected_option_id = request.form.get('option')
+		if selected_option_id:
+			selected_option = Option.query.get(selected_option_id)
+			selected_option.votes += 1
+			db.session.commit() # Save
+
+	return render_template('poll.html', poll=poll, options=options)

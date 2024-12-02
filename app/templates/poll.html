@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Poll{% endblock %}
 {% block content %}
-	<h1>Poll {{ id }}</h1>
+	<h1>{{ poll.question }}</h1>
+	<form method="post">
+		{{ form.hidden_tag() }}
+		{% for option in options %}
+			<div>
+				<input class="form-check" type="radio" name="option"  value="{{ option.id }}" id="option-{{ option.id }}">
+				<label for="option-{{ option.id }}">{{ option.text }}</label>
+			</div>
+		{% endfor %}
+		<button class="btn btn-primary" type="submit">Vote</button>
+	</form>
 {% endblock %}

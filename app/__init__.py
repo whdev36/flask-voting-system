@@ -6,7 +6,8 @@ from flask_cors import CORS # API CORS
 from flask_restful import Api # API
 from flask_admin import Admin # Admin
 from flask_wtf.csrf import CSRFProtect # CSRF token protection
-from flask_login import AnonymousUserMixin
+from flask_login import AnonymousUserMixin # Anonymous User Mixin
+from flask_bootstrap import Bootstrap # Bootstrap
 from flask_admin.contrib.sqla import ModelView # Admin model view
 from . import config # All configurations
 import os # Operting system
@@ -16,6 +17,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
 csrf = CSRFProtect()
+bootstrap = Bootstrap()
 
 # Create admin model view
 class AdminModelView(ModelView):
@@ -39,6 +41,7 @@ def create_app():
 	migrate.init_app(app)
 	login_manager.init_app(app)
 	csrf.init_app(app)
+	bootstrap.init_app(app)
 	CORS(app)
 
 	# Login manager settings

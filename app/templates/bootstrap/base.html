@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="https://github.com/whdev36">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+	<title>OVS | {% block title %}{% endblock %}</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+		* {
+			font-family: "Fredoka", sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<!-- Navbar -->
+	{% include 'navbar.html' %}
+	<!-- Container -->
+	<div class="container my-3">
+		<!-- Messages -->
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% for category, message in messages %}
+				<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+					<strong>{{ category|upper }}:</strong> {{ message }}
+					<button class="btn-close" type="button" data-bs-dismiss="alert"></button>
+				</div>
+			{% endfor %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+	</div>
+	<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.bundle.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+</body>
+</html>
